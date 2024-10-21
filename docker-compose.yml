@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+  nestapp:
+    container_name: nestapp
+    image: francescoxx/nestapp:1.0.0
+    build: .
+    ports:
+      - '3001:3001'
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - MONGO_INITDB_DATABASE=sangueSolidario
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=password
+
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+
